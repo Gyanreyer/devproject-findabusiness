@@ -2,42 +2,113 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
-// See? SCSS is here if you want it
-.example-header {
-  text-align: center;
-  .example-header-title {
-    display: block;
-    font-weight: bold;
-    font-size: 25px;
-  }
-  .example-header-logo {
-    height: 50px;
-  }
-}
-
 body{
   background-color: #EB5255;
 }
 
+
+@keyframes spin{
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
+}
+
+//Based on CSS loader found here: https://www.w3schools.com/howto/howto_css_loader.asp
+.loadingSpinner{
+  border: 8px solid #EEE;
+  border-top: 8px solid #444444; 
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  vertical-align: middle;
+  display: inline-block;
+
+  opacity: 0;
+
+  transition: opacity 0.15s ease-in;
+}
+
+.loadingSpinner.animating{
+  animation: spin 0.5s linear infinite;  
+  
+  opacity: 0.75;
+}
+
+
 #ZipSearch{
-  width: 40%;
-  min-width: 15em;
-  max-width: 25em;
-  font-size: 1.5em;
-  margin: 15% auto;
+  width: 100%;
+  padding: 5px 10px;
+  
+  color: white;
 
-  h1{
-    text-align: center;
+  font-size: 2.5em;
+
+  p{    
     font-weight: bold;
+    line-height: 1em;
 
-    font-size: 2.5em;
+    display: inline;
+
+    margin: 0 0 3px 0;
   }
 
   #ZipInput{
-    width: 80%;
-    max-width: 20em;
+    background: none;
+    outline: none;
 
-    margin: 10px 10% 0 10%;
+    opacity: 0.6;
   }
+
+  #ZipInput.invalid{
+    color: #400000;
+  }
+
+  #ZipInput::placeholder{
+    color: white;
+  }
+
+  #ZipInput:hover, #ZipInput:focus{
+    opacity: 0.9;
+  }
+
+  #ZipInput, .locationName, #EditZip{
+    transition: opacity 0.25s ease-in;
+  }
+
+  #ZipInput, #ZipResults, .locationName{
+    margin: 0;
+
+    font-weight: bold;
+    display: inline;
+  }
+
+  #ZipInput, .locationName{
+    border-width: 0 0 3px 0;
+    border-style: solid;
+    border-color: white;
+
+    line-height: 1em;
+  }
+
+  #ZipResults{
+    cursor: pointer;
+
+    .locationName{
+      opacity: 0.75;
+    }
+
+    #EditZip{
+      width: 30px;
+      margin-left: 5px;
+      opacity: 0;
+    }
+  }
+  
+
+  #ZipResults:hover{
+    .locationName, #EditZip{
+      opacity: 0.9;
+    }
+  }
+
 }
 
