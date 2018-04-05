@@ -1,7 +1,7 @@
 const React = require('react');
 import PropTypes from 'prop-types';
 
-const PlacesService = require('../PlacesService.js');
+const PlacesService = require('../../PlacesService.js');
 
 class ZipInput extends React.PureComponent {
     //Constructor initializes component
@@ -19,6 +19,7 @@ class ZipInput extends React.PureComponent {
         this.handleSearchResponse = this.handleSearchResponse.bind(this);
         this.requestZipInfo = this.requestZipInfo.bind(this);
         this.validateZip = this.validateZip.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
     }
 
     //Handle the response from zip search
@@ -73,14 +74,18 @@ class ZipInput extends React.PureComponent {
             this.requestZipInfo(e.target.value);
     }
 
+    handleTextChange(e){
+        this.setState({zip:e.target.value, zipIsValid: true});
+    }
+
     //Render input text bar which will retrieve location info on valid ZIP codes when it's updated
     render() {
         return (
             <span>
                 <input id="ZipInput" className={this.state.zipIsValid ? 'valid' : 'invalid'} type="text" maxLength="5" size={this.state.zip.length > 0 ? "2":"18"} 
                     value={this.state.zip} placeholder="enter your ZIP code here"
-                    onChange={(e)=>{this.setState({zip:e.target.value})}}
-                    onKeyPress={this.handleKeyPress} onBlur={(e) => { this.requestZipInfo(e.target.value) }}></input>
+                    onChange={this.handleTextChange}
+                    onKeyPress={this.handleKeyPress}></input>
                 <div className={`loadingSpinner${this.state.loading?" animating":""}`}></div>
             </span>
         );

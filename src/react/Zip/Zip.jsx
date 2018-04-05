@@ -5,7 +5,7 @@ const ZipInput = require('./ZipInput.jsx');
 const ZipResults = require('./ZipResults.jsx');
 
 //Component handles searching zip codes
-class ZipSearch extends React.PureComponent {
+class Zip extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -27,15 +27,16 @@ class ZipSearch extends React.PureComponent {
 
     displayResult(zip, locationName){
         this.setState({zip, locationName});
+        this.props.onZipSelected(zip);
     }
 
     render(){
         return (
-            <div id="ZipSearch">
-                <p>Find your business in </p>
+            <div id="Zip" className="searchSection">
+                <p>Find a business in </p>
                 {   //Ternary operator returns either location name results if valid ZIP has been entered/searched
                     //or input field to enter/search a ZIP
-                    this.state.locationName?
+                    this.state.zip?
                         <ZipResults locationName={this.state.locationName} editZip={this.editZip} />:
                         <ZipInput onLocationSelected={this.displayResult} />
                 }
@@ -44,4 +45,8 @@ class ZipSearch extends React.PureComponent {
     }
 }
 
-module.exports = ZipSearch;
+Zip.propTypes = {
+    onZipSelected: PropTypes.func.isRequired
+};
+
+module.exports = Zip;

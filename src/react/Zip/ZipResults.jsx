@@ -19,7 +19,7 @@ class ZipResults extends React.PureComponent{
         //Credit to Julia Simplicio
         return(
             <div id="ZipResults" title="Change location" onClick={this.handleEditClick}>
-                <span className="locationName">{this.props.locationName}</span>
+                <span className="resultName">{this.props.locationName}</span>
                 <img id="EditZip" src="./assets/images/pencil.svg"/>
             </div>
         );
@@ -30,6 +30,6 @@ class ZipResults extends React.PureComponent{
 ZipResults.propTypes = {
     locationName: PropTypes.string.isRequired,
     editZip: PropTypes.func.isRequired,
-}
+};
 
 module.exports = ZipResults;
