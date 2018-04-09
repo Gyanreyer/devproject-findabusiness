@@ -4,6 +4,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
 body{
   background-color: #EB5255;
+
 }
 
 
@@ -70,7 +71,7 @@ body{
   }
 
   input.invalid{
-    color: #500000;
+    color: #8e0a0a;
   }
 
   input{
@@ -97,7 +98,10 @@ body{
 }
 
 #Business{
-  padding-left: 1.5em;
+
+  input{
+    width: 30ch;
+  }
 
   #businessSearch{
     display: inline-block;
@@ -107,11 +111,7 @@ body{
 
   #searchResults{
     margin-top: 5px;
-
-    font-weight: bold;
-    font-size: 0.75em;
-
-    color: #333;
+    margin-bottom: 3em;
 
     position: absolute;
     width: 100%;
@@ -121,41 +121,200 @@ body{
       transform: translateX(-2em);
     }
 
+    .result::after{
+      content:"";
+      height: 2px;
+      width: 100%;
+      display: block;
+      
+      background: white;
+      background: linear-gradient(to right, white, transparent);
+    }
+
     .result{
-      background-color: #ffc4c5;
-      padding: 0.35em;
-      padding-right: 1.5em;
+      color: white;
+
+      position: relative;
 
       width: 100%;
 
       opacity: 1;
       transform: none;
 
-      cursor: pointer;
-
-      box-shadow: 1px -1px 2px #333;
-
       display: inline-block;
 
       transition: 0.3s ease-in-out all;
 
-      .icon{
-        width: 1.5em;
-        height: 1.5em;
-        border-radius: 50%;
+      .detailsExpandButton{
+        width: 100%;
+        display: block;
+        cursor: pointer;
 
-        margin-right: 0.4em;
+        padding: .2em;
 
-        display: inline-block;
-        vertical-align: middle;
+        .icon{
+          width: 1.5em;
+          height: 1.5em;
+          border-radius: 50%;
 
-        object-fit: cover;
+          margin: 0 .4em 0 .3em;
+
+          display: inline-block;
+          vertical-align: top;
+
+          object-fit: cover;
+        }
+
+        .textInfo{
+          display: inline-block;
+        }
+
+        .name, .address{
+          display: block;
+        }
+
+        .name{
+          font-size: 0.6em;
+          font-weight: bold;
+        }
+        .address{
+          font-size: 0.4em;
+          font-weight: normal;
+        }
+
+        .expandArrow{
+          float: right;
+          width: 30px;
+          margin: 10px 0;
+          transition: transform .3s ease-in;
+        }
+        .expandArrow.expanded{
+          transform: rotate(180deg);
+        }
+      }
+
+      .detailsExpandButton:hover{
+        background-color: #ff6568;
+      }
+
+      .details{
+        background-color: #e24648;
+        display: block;
+        max-height: 0;
+        transition: max-height .3s ease-in;
+        overflow-y: auto;
+        overflow-wrap: break-word;
+        
+        box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2);
+
+        p{
+          margin: 5px 10px;
+          font-size: .6em;
+          font-weight: normal;
+          display: block;
+        }
+
+        .categories{
+          font-size: .5em;
+        }
+
+        a{
+          text-decoration: underline;
+          color: #EEE;
+          transition: color .2s ease-in;
+        }
+        a:hover{
+          color: white;
+        }
+
+        .imageView{
+          position: relative;
+          margin: 10px;
+          display: inline-block;
+        }
+
+        img{
+          position: relative;
+          max-width: 360px;
+        }
+
+        .imageOverlay{
+          z-index: 2;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+
+          opacity: 0;
+
+          background: linear-gradient(transparent, rgba(0,0,0,0.6));
+
+          transition: opacity 0.3s ease-in;
+
+          .clickZone{
+            position: absolute;
+            height: 100%;
+            width: 30px;
+            cursor: pointer;
+          }
+
+          .clickZone:hover{
+            img{
+              width: 30px;
+              opacity: 1;
+            }
+          }
+
+          img{
+            width: 20px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
+            opacity: .8;
+
+            cursor: pointer;
+
+            transition: all .2s ease-in;
+          }
+
+          .prev{
+            left: 0;
+
+            img{
+              margin-left: 2px;
+            }
+          }
+
+          .next{
+            right: 0;
+
+            img{
+              margin-right: 2px;
+            }
+          }
+
+          p{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 5px;
+            margin: 0;
+            font-size: .5em;
+          }
+        }
+
+        .imageOverlay:hover{
+          opacity: 1;
+        }
+      }
+
+      .details.expanded{
+        max-height: 1000px;
       }
     }
 
-    .result:hover{
-      background-color: #ffd0d1;
-    }
   }
 }
 
@@ -165,14 +324,14 @@ body{
     transition: opacity 0.25s ease-in;
   }
 
-  #ZipInput, #ZipResults, .resultName{
+  #ZipInput, #Location, .resultName{
     margin: 0;
 
     font-weight: bold;
     display: inline;
   }
 
-  #ZipResults{
+  #Location{
     cursor: pointer;
 
     .resultName{
@@ -187,7 +346,7 @@ body{
   }
   
 
-  #ZipResults:hover{
+  #Location:hover{
     .resultName, #EditZip{
       opacity: 0.9;
     }

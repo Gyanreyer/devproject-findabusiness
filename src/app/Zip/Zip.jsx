@@ -2,7 +2,7 @@ const React = require('react');
 import PropTypes from 'prop-types';
 
 const ZipInput = require('./ZipInput.jsx');
-const ZipResults = require('./ZipResults.jsx');
+const Location = require('./Location.jsx');
 
 //Component handles searching zip codes
 class Zip extends React.PureComponent {
@@ -10,7 +10,7 @@ class Zip extends React.PureComponent {
         super(props);
 
         this.state = {
-            zip: null,//The zip we'll use for future searchs
+            zip: '',//The zip of the location we're searching
             locationName: null//The name of the location we're searching
         }
 
@@ -18,16 +18,22 @@ class Zip extends React.PureComponent {
         this.editZip = this.editZip.bind(this);
     }
 
+    //Call when user clicks to edit location
     editZip(){
+        //Notify app that location is being changed
+        this.props.onChangeLocation();
+
+        //Reset location name
         this.setState({
-            zip: null,
             locationName: null
         });
     }
 
+    //Call when user has selected a valid location so we can display location name as result
     displayResult(zip, locationName){
         this.setState({zip, locationName});
-        this.props.onZipSelected(zip);
+        //Notify app that location has been selected so we can search for businesses there
+        this.props.onLocationSelected(locationName);
     }
 
     render(){
@@ -36,9 +42,9 @@ class Zip extends React.PureComponent {
                 <p>Find a business in </p>
                 {   //Ternary operator returns either location name results if valid ZIP has been entered/searched
                     //or input field to enter/search a ZIP
-                    this.state.zip?
-                        <ZipResults locationName={this.state.locationName} editZip={this.editZip} />:
-                        <ZipInput onLocationSelected={this.displayResult} />
+                    this.state.locationName?
+                        <Location name={this.state.locationName} editZip={this.editZip} />:
+                        <ZipInput previousZip={this.state.zip} onLocationSelected={this.displayResult} />
                 }
             </div>
         );
@@ -46,7 +52,8 @@ class Zip extends React.PureComponent {
 }
 
 Zip.propTypes = {
-    onZipSelected: PropTypes.func.isRequired
+    onLocationSelected: PropTypes.func.isRequired,
+    onChangeLocation: PropTypes.func.isRequired
 };
 
 module.exports = Zip;

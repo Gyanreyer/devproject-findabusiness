@@ -1,7 +1,8 @@
 const React = require('react');
 import PropTypes from 'prop-types';
 
-class ZipResults extends React.PureComponent{
+//Component shows name of selected location and allows user to edit to select a new one
+class Location extends React.PureComponent{
     constructor(props){
         super(props);
 
@@ -18,18 +19,18 @@ class ZipResults extends React.PureComponent{
         //Pencil icon sourced from https://thenounproject.com/
         //Credit to Julia Simplicio
         return(
-            <div id="ZipResults" title="Change location" onClick={this.handleEditClick}>
-                <span className="resultName">{this.props.locationName}</span>
+            <div id="Location" title="Change location" onClick={this.handleEditClick}>
+                <span className="resultName">{this.props.name.split(',')[0]}</span>
                 <img id="EditZip" src="./assets/images/pencil.svg"/>
             </div>
         );
     }
 }
 
-//Require locationName and editZip props
-ZipResults.propTypes = {
-    locationName: PropTypes.string.isRequired,
+//Require name and editZip props
+Location.propTypes = {
+    name: PropTypes.string.isRequired,
     editZip: PropTypes.func.isRequired,
 };
 
-module.exports = ZipResults;
+module.exports = Location;
